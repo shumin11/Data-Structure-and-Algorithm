@@ -1,7 +1,8 @@
 import java.util.*;
 
 public class WordSearch{
-    
+//     O(m*n * 4^L) where (m * n) is the number of cells in the board and L is the length of the word to be matched.
+
     public static boolean exist(char[][] board, String word) {
         int m = board.length;
         int n = board[0].length;
