@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 
-public class possibleBipartition {
+public class PossibleBipartition {
     // from back to front!
     public boolean possibleBipartition(int n, int[][] dislikes) {
         HashMap<Integer, ArrayList<Integer>> neighbors = new HashMap<>();
