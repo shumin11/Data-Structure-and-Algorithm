@@ -2,6 +2,44 @@ import java.util.*;
 import java.util.AbstractMap.SimpleEntry;
 
 public class BinaryTreeVerticalOrderTraversal {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        if (root == null) return new ArrayList<>();
+        HashMap<Integer, List<Integer>> columnsMap = new HashMap<>();
+        Queue<Pair<Integer, TreeNode>> queue = new ArrayDeque<>();
+        queue.add(new Pair(0, root));
+        columnsMap.put(0, new ArrayList<>());
+        columnsMap.get(0).add(root.val);
+        int minCol = Integer.MAX_VALUE;
+        int maxCol = Integer.MIN_VALUE;
+        while (!queue.isEmpty()) {
+            Pair<Integer, TreeNode> curr = queue.poll();
+            int col = curr.getKey();
+            TreeNode currNode = curr.getValue();
+            if (currNode.left != null) {
+                queue.add(new Pair(col - 1, currNode.left));
+                columnsMap.put(col - 1, columnsMap.getOrDefault(col - 1, new ArrayList<>()));
+                columnsMap.get(col - 1).add(currNode.left.val);
+            }
+            if (currNode.right != null) {
+                queue.add(new Pair(col + 1, currNode.right));
+                columnsMap.put(col + 1, columnsMap.getOrDefault(col + 1, new ArrayList<>()));
+                columnsMap.get(col + 1).add(currNode.right.val);
+            }
+        }
+        int minCol = Integer.MAX_VALUE;
+        int maxCol = Integer.MIN_VALUE;
+        for (int c : columnsMap.keySet()) {
+            minCol = Math.min(minCol, c);
+            maxCol = Math.max(maxCol, c);
+        }
+        List<List<Integer>> results = new ArrayList<>();
+        for (int j = minCol; j <= maxCol; j++) {
+            List<Integer> cur = columnsMap.get(j);
+            results.add(cur);
+        }
+        return results;
+    }
+
     class TreeNode {
         int val;
         TreeNode left;
